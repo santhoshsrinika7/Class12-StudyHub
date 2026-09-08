@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chapter - StudyHub</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+
+        .chapter-page {
+            padding: 60px 7%;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .chapter-header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 45px;
+        }
+
+        .chapter-header p {
+            color: #4f46e5;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .chapter-header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .chapter-header span {
+            color: #6b7280;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            border-color: #4f46e5;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .resource-icon {
+            font-size: 38px;
+        }
+
+        .resource-card h3 {
+            margin: 12px 0 5px;
+        }
+
+        .resource-card p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .resource-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 14px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .error-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 800px) {
+
+            .resource-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chapter-header h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            📚 StudyHub
+        </div>
+
+        <nav>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../index.html#subjects">
+                Subjects
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- CHAPTER PAGE -->
+
+    <main class="chapter-page">
+
+
+        <a href="#" id="backButton" class="back-button">
+            ← Back to Subject
+        </a>
+
+
+        <!-- CHAPTER INFORMATION -->
+
+        <section class="chapter-header">
+
+            <p id="subjectName">
+                SUBJECT
+            </p>
+
+            <h1 id="chapterName">
+                Chapter
+            </h1>
+
+            <span>
+                Choose a resource to start studying.
+            </span>
+
+        </section>
+
+
+
+        <!-- RESOURCES -->
+
+        <section>
+
+            <div class="section-heading">
+
+                <p>STUDY MATERIAL</p>
+
+                <h2>Resources</h2>
+
+                <span>
+                    Everything you need for this chapter.
+                </span>
+
+            </div>
+
+
+            <div id="resourceGrid" class="resource-grid">
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 Class 12 StudyHub
+        </p>
+
+        <p>
+            Learn • Practice • Improve
+        </p>
+
+    </footer>
+
+
+
+    <!-- DATA -->
+
+    <script src="../data/subjects.js"></script>
+
+
+    <script>
+
+        // Get information from URL
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const subjectID =
+            params.get("subject");
+
+        const chapterID =
+            parseInt(params.get("chapter"));
+
+
+
+        // Get subject
+
+        const subject =
+            subjects[subjectID];
+
+
+
+        const subjectName =
+            document.getElementById("subjectName");
+
+        const chapterName =
+            document.getElementById("chapterName");
+
+        const resourceGrid =
+            document.getElementById("resourceGrid");
+
+        const backButton =
+            document.getElementById("backButton");
+
+
+
+        // Resource icons
+
+        const resourceIcons = {
+
+            "Notes": "📝",
+
+            "NCERT Q&A": "📕",
+
+            "PYQs": "📄",
+
+            "Worksheets": "📋",
+
+            "Sample Papers": "📚",
+
+            "Important Questions": "⭐"
+
+        };
+
+
+
+        // Check subject and chapter
+
+        if (
+            subject &&
+            subject.chapters[chapterID]
+        ) {
+
+            const chapter =
+                subject.chapters[chapterID];
+
+
+            // Page information
+
+            subjectName.textContent =
+                subject.icon + " " + subject.name;
+
+            chapterName.textContent =
+                chapter.name;
+
+            document.title =
+                chapter.name + " - StudyHub";
+
+
+            // Back button
+
+            backButton.href =
+                "subject.html?subject=" +
+                subjectID;
+
+
+
+            // Create resources
+
+            chapter.resources.forEach(
+                function(resource) {
+
+                    const card =
+                        document.createElement("a");
+
+
+                    card.className =
+                        "resource-card";
+
+
+                    /*
+                    Later we will replace
+                    this # with actual
+                    resource pages/files.
+                    */
+
+                    card.href = "#";
+
+
+                    const icon =
+                        resourceIcons[resource] || "📚";
+
+
+                    card.innerHTML = `
+
+                        <div class="resource-icon">
+                            ${icon}
+                        </div>
+
+                        <h3>
+                            ${resource}
+                        </h3>
+
+                        <p>
+                            Explore ${resource.toLowerCase()}
+                            for this chapter.
+                        </p>
+
+                        <span class="resource-button">
+                            View Resources →
+                        </span>
+
+                    `;
+
+
+                    resourceGrid.appendChild(card);
+
+                }
+            );
+
+
+        } else {
+
+            // Invalid chapter
+
+            subjectName.textContent =
+                "StudyHub";
+
+            chapterName.textContent =
+                "Chapter not found";
+
+
+            resourceGrid.innerHTML = `
+
+                <div class="error-box">
+
+                    <h3>
+                        Sorry, this chapter doesn't exist.
+                    </h3>
+
+                    <p>
+                        Please go back and choose
+                        a valid chapter.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
