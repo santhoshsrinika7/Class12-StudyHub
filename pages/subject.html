@@ -75,6 +75,14 @@
             font-size: 14px;
         }
 
+        .no-chapters {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            color: #6b7280;
+        }
+
         @media (max-width: 800px) {
             .chapter-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -96,7 +104,9 @@
 <body>
 
     <!-- HEADER -->
+
     <header>
+
         <div class="logo">
             📚 StudyHub
         </div>
@@ -106,6 +116,7 @@
             <a href="../index.html#subjects">Subjects</a>
             <a href="../index.html#resources">Resources</a>
         </nav>
+
     </header>
 
 
@@ -122,7 +133,9 @@
 
         <section class="subject-header">
 
-            <h1 id="subjectName">Subject</h1>
+            <h1 id="subjectName">
+                Subject
+            </h1>
 
             <p>
                 Explore chapters, notes, NCERT Q&A, PYQs,
@@ -137,45 +150,19 @@
         <section>
 
             <div class="section-heading">
+
                 <p>CHAPTERS</p>
+
                 <h2>Choose a Chapter</h2>
-                <span>Select a chapter to view its study resources.</span>
+
+                <span>
+                    Select a chapter to view its study resources.
+                </span>
+
             </div>
 
 
-            <div class="chapter-grid">
-
-                <a href="#" class="chapter-card">
-                    <span class="chapter-number">CHAPTER 01</span>
-                    <h3>Chapter One</h3>
-                    <p>
-                        Notes, questions, worksheets and more.
-                    </p>
-                </a>
-
-                <a href="#" class="chapter-card">
-                    <span class="chapter-number">CHAPTER 02</span>
-                    <h3>Chapter Two</h3>
-                    <p>
-                        Notes, questions, worksheets and more.
-                    </p>
-                </a>
-
-                <a href="#" class="chapter-card">
-                    <span class="chapter-number">CHAPTER 03</span>
-                    <h3>Chapter Three</h3>
-                    <p>
-                        Notes, questions, worksheets and more.
-                    </p>
-                </a>
-
-                <a href="#" class="chapter-card">
-                    <span class="chapter-number">CHAPTER 04</span>
-                    <h3>Chapter Four</h3>
-                    <p>
-                        Notes, questions, worksheets and more.
-                    </p>
-                </a>
+            <div id="chapterGrid" class="chapter-grid">
 
             </div>
 
@@ -184,41 +171,118 @@
     </main>
 
 
+    <!-- FOOTER -->
+
     <footer>
+
         <p>© 2026 Class 12 StudyHub</p>
+
         <p>Learn • Practice • Improve</p>
+
     </footer>
 
 
-    <!-- SHOW SELECTED SUBJECT NAME -->
+    <!-- LOAD DATA -->
+
+    <script src="../data/subjects.js"></script>
 
     <script>
 
+        // Get subject from URL
+
         const params = new URLSearchParams(window.location.search);
 
-        const subject = params.get("subject");
+        const subjectID = params.get("subject");
 
-        const subjectNames = {
-            physics: "⚡ Physics",
-            chemistry: "🧪 Chemistry",
-            maths: "📐 Mathematics",
-            biology: "🧬 Biology",
-            english: "📖 English",
-            accountancy: "💰 Accountancy",
-            "business-studies": "📊 Business Studies",
-            economics: "📈 Economics",
-            psychology: "🧠 Psychology",
-            "physical-education": "🏃 Physical Education",
-            ai: "🤖 Artificial Intelligence",
-            "computer-science": "💻 Computer Science"
-        };
 
-        if (subject && subjectNames[subject]) {
-            document.getElementById("subjectName").textContent =
-                subjectNames[subject];
+        // Find subject
+
+        const subject = subjects[subjectID];
+
+
+        const subjectName = document.getElementById("subjectName");
+
+        const chapterGrid = document.getElementById("chapterGrid");
+
+
+        // If subject exists
+
+        if (subject) {
+
+            subjectName.textContent =
+                subject.icon + " " + subject.name;
 
             document.title =
-                subjectNames[subject] + " - StudyHub";
+                subject.name + " - StudyHub";
+
+
+            // Add chapters
+
+            if (subject.chapters.length > 0) {
+
+                subject.chapters.forEach(function(chapter, index) {
+
+                    const card = document.createElement("a");
+
+                    card.href =
+                        "chapter.html?subject=" +
+                        subjectID +
+                        "&chapter=" +
+                        index;
+
+                    card.className = "chapter-card";
+
+
+                    card.innerHTML = `
+                        <span class="chapter-number">
+                            CHAPTER ${String(index + 1).padStart(2, "0")}
+                        </span>
+
+                        <h3>
+                            ${chapter.name}
+                        </h3>
+
+                        <p>
+                            Notes, NCERT Q&A, PYQs,
+                            worksheets and more.
+                        </p>
+                    `;
+
+
+                    chapterGrid.appendChild(card);
+
+                });
+
+            } else {
+
+                chapterGrid.innerHTML = `
+                    <div class="no-chapters">
+                        <h3>Chapters coming soon</h3>
+
+                        <p>
+                            Resources for this subject
+                            will be added soon.
+                        </p>
+                    </div>
+                `;
+
+            }
+
+        } else {
+
+            subjectName.textContent =
+                "Subject not found";
+
+            chapterGrid.innerHTML = `
+                <div class="no-chapters">
+                    <h3>Subject not found</h3>
+
+                    <p>
+                        Please return to the subjects page.
+                    </p>
+                </div>
+            `;
+
         }
 
     </script>
