@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Subject - StudyHub</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .subject-page {
+            padding: 60px 7%;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+
+        .subject-header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .subject-header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .subject-header p {
+            color: #6b7280;
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .chapter-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-4px);
+            border-color: #4f46e5;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .chapter-number {
+            color: #4f46e5;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .chapter-card h3 {
+            margin: 8px 0;
+        }
+
+        .chapter-card p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            .chapter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .chapter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            📚 StudyHub
+        </div>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../index.html#subjects">Subjects</a>
+            <a href="../index.html#resources">Resources</a>
+        </nav>
+    </header>
+
+
+    <!-- SUBJECT PAGE -->
+
+    <main class="subject-page">
+
+        <a href="../index.html" class="back-button">
+            ← Back to Subjects
+        </a>
+
+
+        <!-- SUBJECT INFORMATION -->
+
+        <section class="subject-header">
+
+            <h1 id="subjectName">Subject</h1>
+
+            <p>
+                Explore chapters, notes, NCERT Q&A, PYQs,
+                worksheets and sample papers.
+            </p>
+
+        </section>
+
+
+        <!-- CHAPTERS -->
+
+        <section>
+
+            <div class="section-heading">
+                <p>CHAPTERS</p>
+                <h2>Choose a Chapter</h2>
+                <span>Select a chapter to view its study resources.</span>
+            </div>
+
+
+            <div class="chapter-grid">
+
+                <a href="#" class="chapter-card">
+                    <span class="chapter-number">CHAPTER 01</span>
+                    <h3>Chapter One</h3>
+                    <p>
+                        Notes, questions, worksheets and more.
+                    </p>
+                </a>
+
+                <a href="#" class="chapter-card">
+                    <span class="chapter-number">CHAPTER 02</span>
+                    <h3>Chapter Two</h3>
+                    <p>
+                        Notes, questions, worksheets and more.
+                    </p>
+                </a>
+
+                <a href="#" class="chapter-card">
+                    <span class="chapter-number">CHAPTER 03</span>
+                    <h3>Chapter Three</h3>
+                    <p>
+                        Notes, questions, worksheets and more.
+                    </p>
+                </a>
+
+                <a href="#" class="chapter-card">
+                    <span class="chapter-number">CHAPTER 04</span>
+                    <h3>Chapter Four</h3>
+                    <p>
+                        Notes, questions, worksheets and more.
+                    </p>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>© 2026 Class 12 StudyHub</p>
+        <p>Learn • Practice • Improve</p>
+    </footer>
+
+
+    <!-- SHOW SELECTED SUBJECT NAME -->
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+
+        const subject = params.get("subject");
+
+        const subjectNames = {
+            physics: "⚡ Physics",
+            chemistry: "🧪 Chemistry",
+            maths: "📐 Mathematics",
+            biology: "🧬 Biology",
+            english: "📖 English",
+            accountancy: "💰 Accountancy",
+            "business-studies": "📊 Business Studies",
+            economics: "📈 Economics",
+            psychology: "🧠 Psychology",
+            "physical-education": "🏃 Physical Education",
+            ai: "🤖 Artificial Intelligence",
+            "computer-science": "💻 Computer Science"
+        };
+
+        if (subject && subjectNames[subject]) {
+            document.getElementById("subjectName").textContent =
+                subjectNames[subject];
+
+            document.title =
+                subjectNames[subject] + " - StudyHub";
+        }
+
+    </script>
+
+</body>
+</html>
